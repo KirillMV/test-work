@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container"></div>
+    <p class="title"></p>
+    <script>
+      let container = document.querySelector(".container");
+      let title = document.querySelector(".title");
+
+      let url = new URL(window.location.href);
+      if (url.searchParams.has("s")) {
+        console.log(url.searchParams.get("s"));
+        console.log("tyt");
+
+        document.querySelector(
+          ".title"
+        ).textContent = `This is page for ${url.searchParams.get("s")}`;
+      }
+
+      fetch("https://api.npoint.io/4c35ad691ce0bbbeb781")
+        .then((responce) => responce.json())
+        .then((data) => {
+          for (let i = 0; i < data.spisoka.length; i++) {
+            data.spisoka[i];
+            let el = document.createElement("a");
+
+            el.textContent = `*${data.spisoka[i]}`;
+            let url = new URL(window.location.href);
+            url.searchParams.set("s", `${data.spisoka[i].toLowerCase()}`);
+            el.href = url.href;
+
+            el.onclick = (event) => {
+              url.searchParams.set("s", `${data.spisoka[i].toLowerCase()}`);
+              el.href = url.href;
+
+              //   window.txt = `This is page for ${data.spisoka[i].toLowerCase()}`;
+            };
+            container.appendChild(el);
+          }
+        });
+
+      //   const queryString = window.location.search;
+      //   console.log(queryString);
+      //   const urlParams = new URLSearchParams(queryString);
+    </script>
+  </body>
+</html>
